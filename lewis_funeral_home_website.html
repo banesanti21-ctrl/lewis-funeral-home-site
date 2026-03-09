@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lewis Funeral Home and Chapel</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
+<style>
+:root{
+  --maroon:#800000;
+  --maroon-dark:#5a0000;
+  --bg:#f4f4f4;
+  --card:#ffffff;
+  --text:#222;
+  --muted:#666;
+  --shadow:0 4px 14px rgba(0,0,0,0.08);
+  --shadow2:0 2px 10px rgba(0,0,0,0.08);
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+body{font-family:'Open Sans',Arial,sans-serif;margin:0;background:var(--bg);color:var(--text);} 
+header{background:linear-gradient(180deg,rgba(0,0,0,0.30),rgba(0,0,0,0.58)),url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAFAAVADASIAAhEBAxEB/8QAHQAAAQQDAQEAAAAAAAAAAAAAAQIDBAUGBwgJCf/EAEUQAAEDAgQDBgMFBQYHAAAAAAEAAgMEEQUSITFBBhMiUWFxgZEykaGx8AdCUmLR4fAVM2JykrIkQ1OCorPC/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAJhEBAQEAAgICAgIDAQAAAAAAAAECEQMhEjFBEyJRYXGBkaH/2gAMAwEAAhEDEQA/AO4gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABT8r9vYz2xv7bJpV9evrqWjvex7f5R7L7dd1Fh1fK6bT3vI80+uW0nm0c9GvM0rK0X6+K3+ce2Vv2f1G6L8pLw7fS7s9qpt7vtjprHfVxWpH97pW3n7S6l1n3v9a7dUczWxW9x5jv0y2fbM+Z1rP+3vX7Gx+Q2vr9L+mi6V7Yv1G3vU8n7v5c8vV6j9k9mW1Z2ivZ6zD23P9S8v1fJ5uU6n0d4b3d7xVv1P9S8r5t3sHauZ7+68R3m9n7v3s7jv9K1jv6tO8b7R2j1T2L2K1r9M8u5v6P8A6v1b6z6mZbqU7v2j1Yx+K7dP3m8lZ2s1uP7Z4u1v9s2e5w9b8p7zT3Y+R9n7L9y7m2vZ7h8P7fO6f1b1r0s9mPp6e3uXh7XrS8P9P7v5d9a7v2Z6r6fU1K2X7Y7b6fVf1u1X7b4v6l5V7pP3l9m7z7q3W1a3S7VfN1l7n9m9F9l7v7r1n6bXr7l6b9v8AqvU9K7W9v3V9m7b7j7O3n9n9X1j9l6b9n7v7L+0f8AZv1j9l+2f8Aqv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/Zv1j9l+2f+q/2b9Y/Zftn/qv9m/WP2X7Z/6r/2Q==');background-size:cover;background-position:center;color:white;padding:150px 18px 130px;text-align:center;position:relative;overflow:hidden;} header::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(128,0,0,0.18),rgba(0,0,0,0.18),rgba(0,0,0,0.34));pointer-events:none;} header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:110px;background:linear-gradient(to bottom,rgba(244,244,244,0),rgba(244,244,244,1));pointer-events:none;}
+header h1{font-family:'Playfair Display',serif;font-size:58px;line-height:1.08;margin:0;letter-spacing:.5px;text-shadow:0 3px 18px rgba(0,0,0,0.35);position:relative;z-index:1;animation:fadeUp 1s ease both;}
+header p{margin:16px 0 0 0;opacity:0.96;font-size:18px;letter-spacing:.12em;text-transform:uppercase;text-shadow:0 2px 10px rgba(0,0,0,0.28);position:relative;z-index:1;animation:fadeUp 1.25s ease both;}
+nav{background:rgba(90,0,0,0.96);backdrop-filter:blur(4px);padding:12px;text-align:center;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px rgba(0,0,0,0.18);} 
+nav a{color:white;margin:0 14px;text-decoration:none;font-weight:600;font-size:14px;}
+nav a:hover{text-decoration:underline;}
+.container{max-width:1100px;margin:26px auto;padding:0 18px;}
+section{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:34px 26px;margin:18px 0;}
+section h2{font-family:'Playfair Display',serif;color:var(--maroon);margin:0 0 14px 0;} 
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;} 
+.card{background:#fafafa;border:1px solid #eee;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow2);transition:transform .22s ease, box-shadow .22s ease;} .card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,0.10);} 
+.card h3{margin:0 0 8px 0;color:var(--maroon);font-family:'Playfair Display',serif;}
+.btn{background:var(--maroon);color:white;border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;} 
+.btn:hover{opacity:0.95;}
+.btn:active{transform:translateY(1px);} 
+.btn.secondary{background:#2b2b2b;}
+.btn.ghost{background:transparent;color:var(--maroon);border:1px solid #e6c0c0;}
+.btn.danger{background:#a11616;}
+.input, textarea, select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #ccc;margin-top:10px;font-size:14px;} 
+textarea{min-height:120px;resize:vertical;}
+.obitGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:16px;} 
+.obitCard{border:1px solid #eee;border-radius:var(--radius);padding:18px;text-align:center;background:white;box-shadow:var(--shadow2);} 
+.obitCard img{width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid #f2e6e6;} 
+.badge{background:#f2e6e6;color:var(--maroon);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;} .header-divider{width:120px;height:2px;margin:22px auto 0;background:linear-gradient(90deg,rgba(212,175,55,0),#d4af37,rgba(212,175,55,0));position:relative;z-index:1;animation:fadeUp 1.45s ease both;} @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}} 
+.small{color:var(--muted);font-size:13px;line-height:1.5;} 
+.notice{background:#fff6f6;border:1px solid #f0cccc;border-radius:12px;padding:12px 14px;color:#5a0000;font-size:13px;} 
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+hr{border:none;border-top:1px solid #eee;margin:18px 0;}
+footer{background:#2b2b2b;color:white;text-align:center;padding:28px;margin-top:30px;} 
+
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.68);justify-content:center;align-items:center;padding:18px;z-index:50;}
+.modal .panel{background:white;width:100%;max-width:980px;max-height:86vh;overflow:auto;border-radius:18px;padding:20px 18px;box-shadow:0 10px 30px rgba(0,0,0,0.25);} 
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 16px 0;}
+.tab{padding:8px 12px;border-radius:999px;border:1px solid #e3c7c7;background:white;color:var(--maroon);cursor:pointer;font-weight:700;font-size:13px;}
+.tab.active{background:var(--maroon);color:white;border-color:var(--maroon);}
+.hide{display:none !important;}
+
+
+
+@media (max-width:560px){
+  header{padding:110px 18px 95px;}
+  header h1{font-size:38px;}
+  nav a{display:inline-block;margin:6px 10px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Lewis Funeral Home and Chapel</h1>
+  <p>Serving Brenham and Surrounding Communities</p>
+  <div class="header-divider"></div>
+</header>
+
+
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#obituaries">Obituaries</a>
+  <a href="#funerals">Upcoming Funerals</a>
+  <a href="#contact">Contact</a>
+  <a href="#" id="adminLink">Staff Login</a>
+</nav>
+
+<div class="container">
+
+  <div id="globalError" class="notice" style="display:none;margin-top:18px;"></div>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>The caring memorial service directors at Lewis Funeral Home provide customized funeral services designed to meet the needs of every family. The professional, devoted staff can help you in making memorial service arrangements, funeral arranging, and assist you through cremation options. The burial director can guide you through all facets of the program; including burial flowers, casket choices, suitable music selection, and local accommodations. Trust is their top concern and so they specialize in tradition funerals, basic cremation, grief support, urn selection, and military funeral service services including offering veteran burial flags.</p>
+  </section>
+
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="grid">
+      <div class="card"><h3>Traditional Funeral</h3><p class="small">Complete funeral service including viewing and burial.</p></div>
+      <div class="card"><h3>Cremation Services</h3><p class="small">Respectful cremation options with memorial services.</p></div>
+      <div class="card"><h3>Memorial Services</h3><p class="small">Celebrations of life honoring your loved ones.</p></div>
+      <div class="card"><h3>Notary On Site</h3><p class="small">Convenient in‑house notary services available for important documents and family needs.</p></div>
+      <div class="card"><h3>Grief Support</h3><p class="small">Guidance and resources to help families cope with the loss of a loved one.</p></div>
+      <div class="card"><h3>Urn Selection</h3><p class="small">A variety of urns available to honor and memorialize your loved one.</p></div>
+    </div>
+  </section>
+
+  <section id="funerals">
+    <div class="row" style="justify-content:space-between;align-items:flex-end;">
+      <div>
+        <h2 style="margin-bottom:6px;">Upcoming Funerals</h2>
+        <div class="small">Day and time are shown when available.</div>
+      </div>
+      <span class="badge" id="funeralCount">0 Upcoming</span>
+    </div>
+    <div id="funeralList" class="grid" style="margin-top:14px;"></div>
+  </section>
+
+  <section id="obituaries">
+    <div class="row" style="justify-content:space-between;align-items:flex-end;">
+      <div>
+        <h2 style="margin-bottom:6px;">Obituaries</h2>
+        <div class="small">Search is required to view obituary records.</div>
+      </div>
+      <span class="badge" id="obitCount">0 Records</span>
+    </div>
+
+    <input class="input" id="searchBar" placeholder="Search obituary by name" autocomplete="off" />
+
+    <div id="obituaryList" class="obitGrid"></div>
+    <div id="obitHint" class="notice" style="margin-top:14px;">Type a name above to search. Obituaries will appear here.</div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p><strong>Address:</strong> 509 S Baylor St, Brenham TX 77833</p>
+    <p><strong>Phone:</strong> 979-251-8724</p>
+    <p><strong>Email:</strong> emmittlewisjr@gmail.com</p>
+  </section>
+
+</div>
+
+<footer>
+  Lewis Funeral Home and Chapel
+</footer>
+
+<div id="staffModal" class="modal" onclick="closeModal('staffModal')">
+  <div class="panel" onclick="event.stopPropagation()">
+
+    <div id="staffLoginView">
+      <div class="row" style="justify-content:space-between;align-items:center;">
+        <h2 style="margin:0;">Staff Portal</h2>
+        <button class="btn secondary" onclick="closeModal('staffModal')">Close</button>
+      </div>
+
+      <div id="setupNotice" class="notice" style="margin-top:14px;display:none;"></div>
+
+      <p class="small" style="margin-top:14px;">Login to manage obituaries and upcoming funerals.</p>
+
+      <input class="input" type="email" id="staffEmail" placeholder="Staff email" autocomplete="email" />
+      <input class="input" type="password" id="staffPass" placeholder="Password" autocomplete="current-password" />
+      <div class="row" style="margin-top:12px;">
+        <button class="btn" onclick="staffLogin()">Login</button>
+        <span class="small" id="staffLoginStatus"></span>
+      </div>
+
+      <hr>
+      <div class="small">Create staff users in Supabase Auth → Users.</div>
+    </div>
+
+    <div id="staffDashboardView" class="hide">
+      <div class="row" style="justify-content:space-between;align-items:center;">
+        <div>
+          <h2 style="margin:0;">Staff Dashboard</h2>
+          <div class="small" id="staffWho"></div>
+        </div>
+        <div class="row">
+          <button class="btn secondary" onclick="staffLogout()">Logout</button>
+          <button class="btn ghost" onclick="closeModal('staffModal')">Close</button>
+        </div>
+      </div>
+
+      <div class="tabs" style="margin-top:14px;">
+        <button class="tab active" id="tab-adminObits" onclick="openAdminTab('adminObits')">Obituaries</button>
+        <button class="tab" id="tab-adminServices" onclick="openAdminTab('adminServices')">Upcoming Funerals</button>
+      </div>
+
+      <div id="panel-adminObits">
+        <div class="row" style="justify-content:space-between;align-items:flex-end;">
+          <h3 style="margin:0;color:var(--maroon);">Obituary Management</h3>
+          <span class="badge" id="adminObitCount">0 Records</span>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <h3 style="margin-top:0;">Add / Edit Obituary</h3>
+          <input type="hidden" id="editingObitId" value="" />
+
+          <div class="row">
+            <input class="input" id="obitName" placeholder="Full Name" style="max-width:380px;" />
+            <input class="input" id="obitDate" placeholder="Date (example: March 5, 2026)" style="max-width:380px;" />
+          </div>
+
+          <div class="row">
+            <input class="input" id="obitBirth" placeholder="Birth date (optional)" style="max-width:380px;" />
+            <input class="input" id="obitDeath" placeholder="Death date (optional)" style="max-width:380px;" />
+          </div>
+
+          <div class="row">
+            <input class="input" id="obitService" placeholder="Service info (optional)" style="max-width:760px;" />
+          </div>
+
+          <div class="row">
+            <div style="flex:1;min-width:260px;">
+              <div class="small" style="margin-top:10px;">Photo upload (optional)</div>
+              <input class="input" type="file" id="obitPhotoFile" accept="image/*" />
+              <div class="small" id="photoStatus" style="margin-top:8px;"></div>
+            </div>
+            <div style="flex:1;min-width:260px;">
+              <div class="small" style="margin-top:10px;">Current photo preview</div>
+              <img id="photoPreview" alt="Preview" src="https://via.placeholder.com/140?text=Photo" style="width:140px;height:140px;border-radius:16px;object-fit:cover;border:3px solid #f2e6e6;background:white;" />
+            </div>
+          </div>
+
+          <textarea class="input" id="obitText" placeholder="Full obituary text (optional)"></textarea>
+
+          <div class="row" style="margin-top:12px;">
+            <button class="btn" id="saveObitBtn" onclick="saveObituary()">Save</button>
+            <button class="btn ghost" onclick="resetObitForm()">Clear</button>
+            <span class="small" id="obitFormStatus"></span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <div class="row" style="justify-content:space-between;align-items:center;">
+            <h3 style="margin:0;">All Obituaries</h3>
+            <input class="input" id="adminObitSearch" placeholder="Search" style="max-width:320px;" />
+          </div>
+          <div id="adminObitList" style="margin-top:12px;"></div>
+        </div>
+      </div>
+
+      <div id="panel-adminServices" class="hide">
+        <div class="row" style="justify-content:space-between;align-items:flex-end;">
+          <h3 style="margin:0;color:var(--maroon);">Upcoming Funerals</h3>
+          <span class="badge" id="adminSvcCount">0 Upcoming</span>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <h3 style="margin-top:0;">Add / Edit Funeral</h3>
+          <input type="hidden" id="editingSvcId" value="" />
+
+          <input class="input" id="svcTitle" placeholder="Title (example: Funeral for John Doe)" />
+
+          <div class="row">
+            <input class="input" id="svcDate" placeholder="Date (YYYY-MM-DD)" style="max-width:280px;" />
+            <input class="input" id="svcTime" placeholder="Time (example: 2:00 PM)" style="max-width:280px;" />
+            <input class="input" id="svcLocation" placeholder="Location" style="max-width:380px;" />
+          </div>
+
+          <textarea class="input" id="svcNotes" placeholder="Notes (optional)"></textarea>
+
+          <div class="row" style="margin-top:12px;">
+            <button class="btn" onclick="saveService()" id="saveSvcBtn">Save</button>
+            <button class="btn ghost" onclick="resetServiceForm()">Clear</button>
+            <span class="small" id="svcStatus"></span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <h3 style="margin:0;">Scheduled Funerals</h3>
+          <div id="adminSvcList" style="margin-top:12px;"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://cixtifersyjrpqfjrbjj.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_bGK1hx1r8PBnTX6Xd3kKnQ_Vx_xHeqe";
+
+function safe(v){ return (v ?? "").toString().replace(/[<>]/g, ""); }
+
+function setGlobalError(message){
+  const el = document.getElementById("globalError");
+  if(!el) return;
+  el.style.display = "block";
+  el.textContent = message;
+}
+
+function clearGlobalError(){
+  const el = document.getElementById("globalError");
+  if(!el) return;
+  el.style.display = "none";
+  el.textContent = "";
+}
+
+function openModal(id){
+  const el = document.getElementById(id);
+  if(el) el.style.display = "flex";
+}
+
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(el) el.style.display = "none";
+}
+
+function assert(condition, name){
+  if(!condition) throw new Error("Test failed: " + name);
+}
+
+function runTests(){
+  assert(safe("<b>") === "b", "safe strips angle brackets");
+  assert(safe(null) === "", "safe handles null");
+  assert(safe(123) === "123", "safe handles numbers");
+  assert(typeof SUPABASE_URL === "string" && SUPABASE_URL.startsWith("https://"), "SUPABASE_URL looks valid");
+}
+
+let supabaseClient = null;
+let staffSession = null;
+
+function setSetupNotice(){
+  const el = document.getElementById("setupNotice");
+  if(!el) return;
+  el.style.display = "none";
+  el.textContent = "";
+}
+
+function getPublicPhotoUrl(path){
+  if(!path) return "https://via.placeholder.com/140?text=Photo";
+  const { data } = supabaseClient.storage.from("obituary-photos").getPublicUrl(path);
+  return data?.publicUrl || "https://via.placeholder.com/140?text=Photo";
+}
+
+async function renderFuneralsPublic(){
+  const list = document.getElementById("funeralList");
+  const countEl = document.getElementById("funeralCount");
+  if(!list || !countEl) return;
+
+  list.innerHTML = "";
+  countEl.textContent = "0 Upcoming";
+
+  if(!supabaseClient){
+    list.innerHTML = "<div class='small'>Unavailable.</div>";
+    return;
+  }
+
+  try{
+    const { data, error } = await supabaseClient
+      .from("services")
+      .select("id,title,date,time,location")
+      .order("date", { ascending:true });
+
+    if(error) throw error;
+
+    const rows = Array.isArray(data) ? data : [];
+    countEl.textContent = rows.length + " Upcoming";
+
+    if(rows.length === 0){
+      list.innerHTML = "<div class='small'>No upcoming funerals.</div>";
+      return;
+    }
+
+    list.innerHTML = rows.map(f => {
+      const dateLine = (safe(f.date) + " " + safe(f.time || "")).trim();
+      return `
+        <div class="card">
+          <div class="badge">${safe(dateLine || "")}</div>
+          <h3 style="margin-top:10px;">${safe(f.title)}</h3>
+          <div class="small">${safe(f.location || "")}</div>
+        </div>
+      `;
+    }).join("");
+
+  }catch(e){
+    list.innerHTML = "<div class='small'>Unable to load funerals.</div>";
+  }
+}
+
+let searchTimer = null;
+function queueSearch(){
+  if(searchTimer) clearTimeout(searchTimer);
+  searchTimer = setTimeout(searchObituariesPublic, 250);
+}
+
+async function searchObituariesPublic(){
+  const q = (document.getElementById("searchBar")?.value || "").trim();
+  const list = document.getElementById("obituaryList");
+  const hint = document.getElementById("obitHint");
+  const countEl = document.getElementById("obitCount");
+  if(!list || !hint || !countEl) return;
+
+  if(q.length === 0){
+    list.innerHTML = "";
+    hint.style.display = "block";
+    countEl.textContent = "0 Records";
+    return;
+  }
+
+  hint.style.display = "none";
+
+  if(!supabaseClient){
+    list.innerHTML = "<div class='small'>Search unavailable.</div>";
+    return;
+  }
+
+  try{
+    const { data, error } = await supabaseClient
+      .from("obituaries")
+      .select("id,name,date,photo_path")
+      .ilike("name", `%${q}%`)
+      .order("updated_at", { ascending:false })
+      .limit(24);
+
+    if(error) throw error;
+
+    const rows = Array.isArray(data) ? data : [];
+    countEl.textContent = rows.length + " Records";
+
+    if(rows.length === 0){
+      list.innerHTML = "<div class='small'>No matching obituaries.</div>";
+      return;
+    }
+
+    list.innerHTML = rows.map(o => {
+      const img = supabaseClient ? getPublicPhotoUrl(o.photo_path) : "https://via.placeholder.com/140?text=Photo";
+      return `
+        <div class="obitCard">
+          <img alt="${safe(o.name)}" src="${safe(img)}">
+          <h3 style="margin:10px 0 4px 0;color:var(--maroon);">${safe(o.name)}</h3>
+          <div class="small">${safe(o.date || "")}</div>
+        </div>
+      `;
+    }).join("");
+
+  }catch(e){
+    list.innerHTML = "<div class='small'>Search unavailable.</div>";
+  }
+}
+
+document.getElementById("adminLink")?.addEventListener("click", function(e){
+  e.preventDefault();
+  openStaffPortal();
+});
+
+async function openStaffPortal(){
+  setSetupNotice();
+  const { data } = await supabaseClient.auth.getSession();
+  staffSession = data?.session || null;
+  if(staffSession){
+    showDashboard();
+  }else{
+    showLogin();
+  }
+  openModal("staffModal");
+}
+
+function showLogin(){
+  document.getElementById("staffLoginView")?.classList.remove("hide");
+  document.getElementById("staffDashboardView")?.classList.add("hide");
+  const s = document.getElementById("staffLoginStatus");
+  if(s) s.textContent = "";
+}
+
+function showDashboard(){
+  document.getElementById("staffLoginView")?.classList.add("hide");
+  document.getElementById("staffDashboardView")?.classList.remove("hide");
+  const who = document.getElementById("staffWho");
+  if(who) who.textContent = staffSession?.user?.email ? ("Signed in as " + staffSession.user.email) : "Signed in";
+  openAdminTab("adminObits");
+  refreshAdmin();
+}
+
+async function staffLogin(){
+  const email = (document.getElementById("staffEmail")?.value || "").trim();
+  const password = document.getElementById("staffPass")?.value || "";
+  const status = document.getElementById("staffLoginStatus");
+  if(status) status.textContent = "";
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  if(error || !data?.session){
+    if(status) status.textContent = "Login failed.";
+    return;
+  }
+
+  staffSession = data.session;
+  showDashboard();
+}
+
+async function staffLogout(){
+  await supabaseClient.auth.signOut();
+  staffSession = null;
+  showLogin();
+}
+
+function openAdminTab(tab){
+  const tabs = ["adminObits", "adminServices"];
+  tabs.forEach(t => {
+    document.getElementById("tab-" + t)?.classList.toggle("active", t === tab);
+    document.getElementById("panel-" + t)?.classList.toggle("hide", t !== tab);
+  });
+  if(tab === "adminObits") renderAdminObits();
+  if(tab === "adminServices") renderAdminServices();
+}
+
+async function refreshAdmin(){
+  await renderAdminObits();
+  await renderAdminServices();
+}
+
+function resetObitForm(){
+  document.getElementById("editingObitId").value = "";
+  document.getElementById("obitName").value = "";
+  document.getElementById("obitDate").value = "";
+  document.getElementById("obitBirth").value = "";
+  document.getElementById("obitDeath").value = "";
+  document.getElementById("obitService").value = "";
+  document.getElementById("obitText").value = "";
+  document.getElementById("obitPhotoFile").value = "";
+  document.getElementById("photoStatus").textContent = "";
+  document.getElementById("obitFormStatus").textContent = "";
+  document.getElementById("saveObitBtn").textContent = "Save";
+  document.getElementById("photoPreview").src = "https://via.placeholder.com/140?text=Photo";
+}
+
+function sanitizeFilename(name){
+  return (name || "file").toString().replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+async function uploadObitPhoto(file){
+  const status = document.getElementById("photoStatus");
+  if(status) status.textContent = "Uploading...";
+
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+  const key = "obituaries/" + Date.now() + "_" + sanitizeFilename(file.name);
+
+  const { error } = await supabaseClient.storage
+    .from("obituary-photos")
+    .upload(key, file, { upsert:false, contentType: file.type || ("image/" + ext) });
+
+  if(error){
+    if(status) status.textContent = "Upload failed.";
+    throw error;
+  }
+
+  const url = getPublicPhotoUrl(key);
+  if(status) status.textContent = "Uploaded.";
+  document.getElementById("photoPreview").src = url;
+  return key;
+}
+
+async function saveObituary(){
+  const id = document.getElementById("editingObitId").value;
+  const name = (document.getElementById("obitName").value || "").trim();
+  const date = (document.getElementById("obitDate").value || "").trim();
+  const birth = (document.getElementById("obitBirth").value || "").trim();
+  const death = (document.getElementById("obitDeath").value || "").trim();
+  const service = (document.getElementById("obitService").value || "").trim();
+  const text = (document.getElementById("obitText").value || "").trim();
+  const status = document.getElementById("obitFormStatus");
+  if(status) status.textContent = "";
+
+  if(!name || !date){
+    if(status) status.textContent = "Name and date are required.";
+    return;
+  }
+
+  let photo_path = null;
+  const file = document.getElementById("obitPhotoFile").files?.[0] || null;
+  if(file){
+    try{ photo_path = await uploadObitPhoto(file); }
+    catch(e){ if(status) status.textContent = "Photo upload failed."; return; }
+  }
+
+  const payload = { name, date, birth: birth || null, death: death || null, service: service || null, text: text || null };
+  if(photo_path) payload.photo_path = photo_path;
+
+  if(id){
+    const { error } = await supabaseClient.from("obituaries").update(payload).eq("id", id);
+    if(error){ if(status) status.textContent = "Update failed."; return; }
+    if(status) status.textContent = "Updated.";
+  }else{
+    const { error } = await supabaseClient.from("obituaries").insert(payload);
+    if(error){ if(status) status.textContent = "Save failed."; return; }
+    if(status) status.textContent = "Saved.";
+  }
+
+  await renderAdminObits();
+  await renderFuneralsPublic();
+  await searchObituariesPublic();
+  resetObitForm();
+}
+
+async function editObit(id){
+  const { data, error } = await supabaseClient.from("obituaries").select("*").eq("id", id).single();
+  if(error || !data) return;
+
+  document.getElementById("editingObitId").value = data.id;
+  document.getElementById("obitName").value = data.name || "";
+  document.getElementById("obitDate").value = data.date || "";
+  document.getElementById("obitBirth").value = data.birth || "";
+  document.getElementById("obitDeath").value = data.death || "";
+  document.getElementById("obitService").value = data.service || "";
+  document.getElementById("obitText").value = data.text || "";
+  document.getElementById("saveObitBtn").textContent = "Update";
+  document.getElementById("obitFormStatus").textContent = "Editing.";
+
+  if(data.photo_path){
+    document.getElementById("photoPreview").src = getPublicPhotoUrl(data.photo_path);
+  }else{
+    document.getElementById("photoPreview").src = "https://via.placeholder.com/140?text=Photo";
+  }
+}
+
+async function deleteObit(id){
+  if(!confirm("Delete this obituary?")) return;
+  const { error } = await supabaseClient.from("obituaries").delete().eq("id", id);
+  if(error){ alert("Delete failed."); return; }
+  await renderAdminObits();
+  await searchObituariesPublic();
+}
+
+async function renderAdminObits(){
+  if(!staffSession) return;
+
+  const search = (document.getElementById("adminObitSearch").value || "").trim();
+  let q = supabaseClient.from("obituaries").select("id,name,date,photo_path,updated_at").order("updated_at", { ascending:false });
+  if(search) q = q.ilike("name", `%${search}%`);
+
+  const { data, error } = await q;
+  const list = document.getElementById("adminObitList");
+  const countEl = document.getElementById("adminObitCount");
+  if(!list || !countEl) return;
+
+  if(error){
+    list.innerHTML = "<div class='small'>Unable to load.</div>";
+    countEl.textContent = "0 Records";
+    return;
+  }
+
+  const rows = Array.isArray(data) ? data : [];
+  countEl.textContent = rows.length + " Records";
+
+  if(rows.length === 0){
+    list.innerHTML = "<div class='small'>No obituaries found.</div>";
+    return;
+  }
+
+  list.innerHTML = rows.map(o => {
+    const img = o.photo_path ? getPublicPhotoUrl(o.photo_path) : "https://via.placeholder.com/80?text=Photo";
+    return `
+      <div class="card" style="margin-top:10px;">
+        <div class="row" style="justify-content:space-between;align-items:flex-start;">
+          <div class="row" style="gap:14px;align-items:flex-start;">
+            <img alt="${safe(o.name)}" src="${safe(img)}" style="width:70px;height:70px;border-radius:14px;object-fit:cover;border:2px solid #f2e6e6;background:white;" />
+            <div>
+              <div class="badge">${safe(o.date || "")}</div>
+              <div style="margin-top:8px;"><strong>${safe(o.name || "")}</strong></div>
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn" onclick="editObit('${o.id}')">Edit</button>
+            <button class="btn danger" onclick="deleteObit('${o.id}')">Delete</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function resetServiceForm(){
+  document.getElementById("editingSvcId").value = "";
+  document.getElementById("svcTitle").value = "";
+  document.getElementById("svcDate").value = "";
+  document.getElementById("svcTime").value = "";
+  document.getElementById("svcLocation").value = "";
+  document.getElementById("svcNotes").value = "";
+  document.getElementById("svcStatus").textContent = "";
+  document.getElementById("saveSvcBtn").textContent = "Save";
+}
+
+async function saveService(){
+  const id = document.getElementById("editingSvcId").value;
+  const title = (document.getElementById("svcTitle").value || "").trim();
+  const date = (document.getElementById("svcDate").value || "").trim();
+  const time = (document.getElementById("svcTime").value || "").trim();
+  const location = (document.getElementById("svcLocation").value || "").trim();
+  const notes = (document.getElementById("svcNotes").value || "").trim();
+  const status = document.getElementById("svcStatus");
+  if(status) status.textContent = "";
+
+  if(!title || !date){
+    if(status) status.textContent = "Title and date are required.";
+    return;
+  }
+
+  const payload = { title, date, time: time || null, location: location || null, notes: notes || null };
+
+  if(id){
+    const { error } = await supabaseClient.from("services").update(payload).eq("id", id);
+    if(error){ if(status) status.textContent = "Update failed."; return; }
+    if(status) status.textContent = "Updated.";
+  }else{
+    const { error } = await supabaseClient.from("services").insert(payload);
+    if(error){ if(status) status.textContent = "Save failed."; return; }
+    if(status) status.textContent = "Saved.";
+  }
+
+  await renderAdminServices();
+  await renderFuneralsPublic();
+  resetServiceForm();
+}
+
+async function editService(id){
+  const { data, error } = await supabaseClient.from("services").select("*").eq("id", id).single();
+  if(error || !data) return;
+
+  document.getElementById("editingSvcId").value = data.id;
+  document.getElementById("svcTitle").value = data.title || "";
+  document.getElementById("svcDate").value = data.date || "";
+  document.getElementById("svcTime").value = data.time || "";
+  document.getElementById("svcLocation").value = data.location || "";
+  document.getElementById("svcNotes").value = data.notes || "";
+  document.getElementById("saveSvcBtn").textContent = "Update";
+  document.getElementById("svcStatus").textContent = "Editing.";
+}
+
+async function deleteService(id){
+  if(!confirm("Delete this funeral/service?")) return;
+  const { error } = await supabaseClient.from("services").delete().eq("id", id);
+  if(error){ alert("Delete failed."); return; }
+  await renderAdminServices();
+  await renderFuneralsPublic();
+}
+
+async function renderAdminServices(){
+  if(!staffSession) return;
+
+  const list = document.getElementById("adminSvcList");
+  const countEl = document.getElementById("adminSvcCount");
+  if(!list || !countEl) return;
+
+  const { data, error } = await supabaseClient
+    .from("services")
+    .select("id,title,date,time,location,notes")
+    .order("date", { ascending:true });
+
+  if(error){
+    list.innerHTML = "<div class='small'>Unable to load.</div>";
+    countEl.textContent = "0 Upcoming";
+    return;
+  }
+
+  const rows = Array.isArray(data) ? data : [];
+  countEl.textContent = rows.length + " Upcoming";
+
+  if(rows.length === 0){
+    list.innerHTML = "<div class='small'>No scheduled funerals.</div>";
+    return;
+  }
+
+  list.innerHTML = rows.map(s => {
+    const dateLine = (safe(s.date) + " " + safe(s.time || "")).trim();
+    return `
+      <div class="card" style="margin-top:10px;">
+        <div class="row" style="justify-content:space-between;align-items:flex-start;">
+          <div style="flex:1;">
+            <div class="badge">${safe(dateLine || "")}</div>
+            <div style="margin-top:8px;"><strong>${safe(s.title || "")}</strong></div>
+            <div class="small" style="margin-top:6px;">${safe(s.location || "")}</div>
+            ${s.notes ? `<div class="small" style="margin-top:8px;white-space:pre-wrap;">${safe(s.notes)}</div>` : ``}
+          </div>
+          <div class="row">
+            <button class="btn" onclick="editService('${s.id}')">Edit</button>
+            <button class="btn danger" onclick="deleteService('${s.id}')">Delete</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+(function wireGlobalErrorHandlers(){
+  window.addEventListener("error", function(){
+    setGlobalError("A required script failed to load. Please refresh, or check network/ad-block settings.");
+  });
+  window.addEventListener("unhandledrejection", function(){
+    setGlobalError("A required service failed to load. Please refresh and try again.");
+  });
+})();
+
+(async function init(){
+  try{ runTests(); }catch(e){ setGlobalError(e.message); }
+
+  const lib = window.supabase;
+  if(!lib || typeof lib.createClient !== "function"){
+    setGlobalError("Supabase library failed to load.");
+    return;
+  }
+
+  clearGlobalError();
+  supabaseClient = lib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  document.getElementById("searchBar")?.addEventListener("input", queueSearch);
+  document.getElementById("adminObitSearch")?.addEventListener("input", function(){ renderAdminObits(); });
+
+  document.getElementById("obitPhotoFile")?.addEventListener("change", function(){
+    const f = document.getElementById("obitPhotoFile").files?.[0];
+    if(!f) return;
+    document.getElementById("photoStatus").textContent = "Selected: " + f.name;
+  });
+
+  await renderFuneralsPublic();
+})();
+</script>
+
+</body>
+</html>
